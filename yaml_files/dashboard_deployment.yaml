@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: streamlit-dashboard
+  namespace: streamlit-dashboard
+spec:
+  replicas: 1  # Update the number of replicas to 1
+  selector:
+    matchLabels:
+      app: streamlit-dashboard
+  template:
+    metadata:
+      labels:
+        app: streamlit-dashboard
+    spec:
+      containers:
+      - name: streamlit-dashboard
+        image: streamlit-dashboard
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: PORT
+          value: "8501"
+        - name: KAFKA_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secrets
+              key: kafka-api-key
+        - name: KAFKA_API_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: my-app-secrets
+              key: kafka-api-secret
+        ports:
+        - containerPort: 8501
+        resources:
+          limits:
+            cpu: "1"
+            memory: "4Gi"
+          requests:
+            cpu: "0.5"
+            memory: "1Gi"

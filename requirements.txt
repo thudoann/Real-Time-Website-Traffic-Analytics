@@ -1,0 +1,10 @@
+pandas
+dataiku-api-client
+geoip2
+pydeck
+confluent-kafka
+python-dateutil
+plotly
+numpy
+streamlit
+kubernetes
